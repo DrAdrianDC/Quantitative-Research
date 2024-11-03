@@ -1,4 +1,4 @@
-# Project-3- Anomaly Detection WTI Oil Prices using LSTM Autoencoders
+# Anomaly Detection WTI Oil Prices using LSTM Autoencoders
 
 The ability to detect anomalies in crude oil prices has practical application in the financial and energy sectors. Detecting abnormal price movements early can help to make informed decisions and mitigate potential risks. The main goal of this project is to build an Anomaly Detection model based on LSTM Autoencoders for the time series of the WTI Oil Prices. 
 

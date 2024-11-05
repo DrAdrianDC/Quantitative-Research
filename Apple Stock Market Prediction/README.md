@@ -16,6 +16,10 @@ The code shared in this project obtains historical stock price data for Apple In
 The project aims to develop a neural network-based model that can effectively predict future stock prices based on historical data. The model's performance will be evaluated using standard regression metrics, and improvements will be explored to enhance prediction accuracy.
 
 
+![Apple-Stock-Close_Price-Prediction](https://github.com/user-attachments/assets/821a50cc-0ce4-48f5-9f5e-a8dbf9827503)
+
+
+
 # Requirements
 
 * Python 3.8.3

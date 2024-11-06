@@ -1,6 +1,6 @@
 # Machine Learning in Finance
 
-This repository contains a collection of end-to-end machine learning and data science projects I have worked on Machine Learning in Finance
+This repository showcases a collection of end-to-end Machine Learning and Data Science projects focused on applications in Finance. Each project demonstrates the practical use of advanced machine learning techniques to address real-world financial challenges
 
 ## Overview
 

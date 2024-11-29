@@ -14,8 +14,15 @@ Predicting stock prices is a challenging task due to the inherent stochastic nat
 
 ## Features
 
-    Download real-time stock data using Yahoo Finance with the yfinance library.
-    Classify stock price movements into Up, Down, and Stable states.
-    Construct a Markov Chain for modeling state transitions and predicting future states.
-    Train a Logistic Regression model to predict stock price movements using daily returns.
-    Evaluate and compare the performance of Markov Chains and Machine Learning predictions.
+  -  Download real-time stock data using Yahoo Finance with the yfinance library.
+    
+  -  Classify stock price movements into Up, Down, and Stable states.
+    
+  -  Construct a Markov Chain for modeling state transitions and predicting future states.
+    
+  -  Train a Logistic Regression model to predict stock price movements using daily returns.
+    
+  -  Evaluate and compare the performance of Markov Chains and Machine Learning predictions.
+
+
+

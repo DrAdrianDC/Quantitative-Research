@@ -9,7 +9,7 @@ This repository showcases a collection of end-to-end Machine Learning and Data S
 
 ## Table of Contents
 
-- [Programs Overview](#programs-overview)
+- [Projects Overview](#projects-overview)
   - [1. Anomaly Detection WTI Oil Prices using LSTM Autoencoders](#1-Anomaly-Detection-WTI-Oil-Prices-using-LSTM-Autoencoders)
   - [2. Apple Stock Market Prediction](#2-Apple-Stock-Market-Prediction)
   - [3. Quantitative Trading Strategies](#3-Quantitative-Trading-Strategies)

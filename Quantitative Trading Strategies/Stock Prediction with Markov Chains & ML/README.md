@@ -10,3 +10,12 @@ This project demonstrates the use of Markov Chains and Machine Learning for pred
 ## Motivation
 
 Predicting stock prices is a challenging task due to the inherent stochastic nature of financial markets. This project explores a hybrid approach, combining probabilistic Markov models with machine learning, to gain insights into the dynamics of stock price movements.
+
+
+## Features
+
+    Download real-time stock data using Yahoo Finance with the yfinance library.
+    Classify stock price movements into Up, Down, and Stable states.
+    Construct a Markov Chain for modeling state transitions and predicting future states.
+    Train a Logistic Regression model to predict stock price movements using daily returns.
+    Evaluate and compare the performance of Markov Chains and Machine Learning predictions.

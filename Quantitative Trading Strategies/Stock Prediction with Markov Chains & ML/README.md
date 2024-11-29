@@ -12,8 +12,10 @@ This project demonstrates the use of Markov Chains and Machine Learning for pred
 Predicting stock prices is a challenging task due to the inherent stochastic nature of financial markets. This project explores a hybrid approach, combining probabilistic Markov models with machine learning, to gain insights into the dynamics of stock price movements.
 
 ## Why using Markov chains?
-Markov chains are useful in finance, for instance, Modeling Stock Prices: Markov chains are often used to model stock prices or financial instruments where future states (e.g., price changes) depend only on the present state and not on past states. This is known as the Markov Property and is particularly useful in modeling returns that follow certain random processes, such as in the case of asset pricing models or options pricing.
+Markov chains are useful in finance, for instance, Modeling Stock Prices: Markov chains are often used to model stock prices or financial instruments where future states (e.g., price changes) depend only on the present state and not on past states. 
+The idea is to represent different possible price levels or returns as discrete states, and the Markov chain determines the probabilities of transitioning from one state to another.
 
+For example, stock prices can be categorized into states like "up", "down", or "neutral." The Markov chain would calculate the probability of the price going from "up" to "down", or staying in "neutral", given the current state. By using these probabilities, analysts can predict future price movements or simulate possible price scenarios, helping in risk management, option pricing, and decision-making.
 ## Features
 
   -  Download real-time stock data using Yahoo Finance with the yfinance library.

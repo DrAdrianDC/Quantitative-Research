@@ -1,4 +1,4 @@
-# Machine Learning in Finance
+# Quantitative Analytics
 
 This repository showcases a collection of end-to-end Machine Learning and Data Science projects focused on applications in Finance. Each project demonstrates the practical use of advanced machine learning techniques to address real-world financial challenges
 

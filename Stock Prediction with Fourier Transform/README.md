@@ -21,10 +21,20 @@ The Fourier transform with 3 components appears to capture the general trend of 
 ## Requirements
 
 - Python 3.8.3
-- NumPy library
-- yfinance library
-- pandas library
-- matplotlib library
+- 
+Required Libraries: The following libraries need to be installed:
+
+yfinance: For accessing financial data.
+pandas: For data manipulation and analysis.
+numpy: For numerical computations.
+matplotlib: For creating visualizations.
+
+
+## Installation
+
+```bash
+pip install yfinance pandas numpy matplotlib
+```
 
 ## Usage
 Run the script: 

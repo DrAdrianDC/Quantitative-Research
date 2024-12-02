@@ -11,12 +11,12 @@ To apply Fourier transforms to our financial data, we will first calculate the F
 
 This Python script analyzes the S&P 500 ETF (SPY) historical stock price data using Fourier Transform techniques to identify patterns and trends. Here's what it does:
 
-    Data Download: Retrieves SPY data from Yahoo Finance between 2010-01-01 and 2024-12-01.
-    Error Handling: Checks if the data is empty or lacks the required 'Close' prices column, ensuring robustness.
-    Data Preprocessing: Extracts, cleans, and formats the 'Close' price data with the Date as the index.
-    Fourier Transform: Applies the Fast Fourier Transform (FFT) to the 'Close' prices, capturing frequency components.
-    Visualization: Reconstructs and visualizes the stock price using various numbers of Fourier components (e.g., 3, 6, 9) to highlight the impact of frequency truncation.
-    Output: Saves the plot as a PNG file and displays it, showing both the original stock prices and Fourier-reconstructed trends.
+  -  **Data Download:** Retrieves SPY data from Yahoo Finance between 2010-01-01 and 2024-12-01.
+  -  **Error Handling:** Checks if the data is empty or lacks the required 'Close' prices column, ensuring robustness.
+  -  **Data Preprocessing:** Extracts, cleans, and formats the 'Close' price data with the Date as the index.
+  -  **Fourier Transform:** Applies the Fast Fourier Transform (FFT) to the 'Close' prices, capturing frequency components.
+  -  **Visualization:** Reconstructs and visualizes the stock price using various numbers of Fourier components (e.g., 3, 6, 9) to highlight the impact of frequency truncation.
+  -  **Output:** Saves the plot as a PNG file and displays it, showing both the original stock prices and Fourier-reconstructed trends.
 
 This code is ideal for exploring the cyclical nature of stock prices and learning signal processing techniques in financial analysis.
 

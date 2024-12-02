@@ -22,6 +22,6 @@ The Fourier transform with 3 components appears to capture the general trend of 
 Run the script: 
 
 ```bash
-python FT-stock-market.py
+python FT-Stock-market.py
 ```
 

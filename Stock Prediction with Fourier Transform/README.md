@@ -23,6 +23,8 @@ The Fourier transform with 3 components appears to capture the general trend of 
 - Python 3.8.3
 - NumPy library
 - yfinance library
+- pandas library
+- matplotlib library
 
 ## Usage
 Run the script: 

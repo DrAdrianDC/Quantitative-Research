@@ -11,4 +11,9 @@ To apply Fourier transforms to our financial data, we will first calculate the F
 
 
 
+
+![ft_s p500_stock_prices](https://github.com/user-attachments/assets/783f31c0-9d0d-4c69-a174-3c5d601546da)
+
+
+
 The Fourier transform with 3 components appears to capture the general trend of the closing prices, while the Fourier transforms with 6 and 9 components capture additional high-frequency components. In other words, it extracts long and short-term trends. The transformation with 9 components serves as the long-term trend.

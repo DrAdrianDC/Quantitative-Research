@@ -11,4 +11,4 @@ To apply Fourier transforms to our financial data, we will first calculate the F
 
 
 
-The Fourier transform with 3 components appears to capture the general trend of the closing prices, while the Fourier transforms with 6 and 9 components capture additional high-frequency components. In other words, it extracts long and short-term trends. The transformation with 3 components serves as the long-term trend.
+The Fourier transform with 3 components appears to capture the general trend of the closing prices, while the Fourier transforms with 6 and 9 components capture additional high-frequency components. In other words, it extracts long and short-term trends. The transformation with 9 components serves as the long-term trend.

@@ -10,6 +10,7 @@ To apply Fourier transforms to our financial data, we will first calculate the F
 
 
 
+![ft_s p500_stock_prices](https://github.com/user-attachments/assets/6a17d926-a3b5-4c77-ab7a-65e19bb10d10)
 
 
 

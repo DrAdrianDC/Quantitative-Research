@@ -33,6 +33,8 @@ For example, stock prices can be categorized into states like "Up", "Down", or "
 
 ## How to Use
 
+In the **scripts** folder:
+
   1- Run **fetch_data.py** to download stock data.
     
   2- Use **markov_model.py** to analyze states and build the transition matrix.

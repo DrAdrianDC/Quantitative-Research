@@ -23,7 +23,7 @@ For example, stock prices can be categorized into states like "Up", "Down", or "
 ## Repository Structure
 
 ```plaintext
-Stock Price Prediction Using Markov Chains and Machine Learning/
+**Stock Price Prediction Using Markov Chains and Machine Learning/**
 │
 ├── README.md                # Project description and instructions
 │

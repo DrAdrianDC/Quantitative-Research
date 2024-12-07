@@ -1,4 +1,4 @@
-## Results and outcomes
+# Results and outcomes
 
 
 ## Markov Chain model

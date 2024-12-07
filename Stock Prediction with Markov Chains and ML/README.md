@@ -1,4 +1,4 @@
-# Stock Price Prediction Using Markov Chains and Machine Learning
+# Stock Price Prediction Movements Using Markov Chains and Machine Learning
 
 
 ## Overview

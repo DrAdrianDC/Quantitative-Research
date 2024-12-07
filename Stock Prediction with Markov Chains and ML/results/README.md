@@ -6,4 +6,5 @@ Stores outcomes, including generated figures, the transition matrix from the Mar
 
 The **reports** folder contains:
 
+ The result analysis for each of the models under consideration.
 

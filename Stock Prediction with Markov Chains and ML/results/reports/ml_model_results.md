@@ -4,7 +4,7 @@
 
 ## Logistic regression model
 
-1. Cross-Validation Accuracy:
+## 1. Cross-Validation Accuracy:
     * Cross-validation scores range between 97.81% and 98.90%, with a mean accuracy of 98.11%.
     * These scores indicate excellent generalization performance across the training dataset folds. The use of class weighting seems to have significantly improved the model's ability to handle imbalanced data during cross-validation.
 2. Test Set Accuracy:

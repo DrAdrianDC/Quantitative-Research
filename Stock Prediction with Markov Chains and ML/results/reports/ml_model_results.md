@@ -1,4 +1,6 @@
-### Logistic regression model
+# Machine learning model 
+
+## Logistic regression model
 
 1. Cross-Validation Accuracy:
     * Cross-validation scores range between 97.81% and 98.90%, with a mean accuracy of 98.11%.

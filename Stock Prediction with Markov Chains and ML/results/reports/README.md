@@ -15,7 +15,9 @@
 3. Confusion Matrix:
 
 [[231   0   0]
+
  [ 10  69   0]
+ 
  [  0   0 240]]
 
 * The rows represent actual classes: Down, Stable, and Up.

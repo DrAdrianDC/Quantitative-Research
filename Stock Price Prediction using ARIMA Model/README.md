@@ -6,3 +6,14 @@ This project implements an ARIMA (AutoRegressive Integrated Moving Average) mode
 
 ## Features
 
+* Stock data scraping (Yahoo Finance API)
+  
+* ARIMA model for stock price prediction
+  
+* Data preprocessing and feature engineering
+  
+* Evaluation with RMSE and other metrics
+  
+* Visualization of forecasted vs actual prices
+
+

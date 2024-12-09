@@ -6,7 +6,7 @@ This project implements an ARIMA (AutoRegressive Integrated Moving Average) mode
 
 ## Features
 
-* Stock data scraping (Yahoo Finance API)
+* Stock data download (Yahoo Finance Python library )
   
 * ARIMA model for stock price prediction
   

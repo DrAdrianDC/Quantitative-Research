@@ -6,6 +6,7 @@ This project implements an ARIMA (AutoRegressive Integrated Moving Average) mode
 ## Why ARIMA model ?
 
 
+ARIMA is a powerful time series analysis technique used to forecast future values based on past data. The model works by identifying patterns in the data and using them to make predictions.
 
 
 

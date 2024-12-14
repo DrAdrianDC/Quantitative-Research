@@ -28,7 +28,7 @@ ARIMA is a powerful time series analysis technique used to forecast future value
 ![arima_predictions_vs_actual](https://github.com/user-attachments/assets/be339b71-7871-4550-85a7-41cddb27b4ef)
 
 
-
+It is observed that the ARIMA predictions are very similar to the actual closing prices. This suggests that the model is capturing the underlying patterns in the data and making accurate predictions.
 
 
 

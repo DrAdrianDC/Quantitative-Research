@@ -9,7 +9,6 @@ This project implements an ARIMA (AutoRegressive Integrated Moving Average) mode
 ARIMA is a powerful time series analysis technique used to forecast future values based on past data. The model works by identifying patterns in the data and using them to make predictions.
 
 
-
 ## Features
 
 * Stock data download (Yahoo Finance Python library )
@@ -24,6 +23,13 @@ ARIMA is a powerful time series analysis technique used to forecast future value
 
 
 ## Output
+
+
+![arima_predictions_vs_actual](https://github.com/user-attachments/assets/be339b71-7871-4550-85a7-41cddb27b4ef)
+
+
+
+
 
 
 

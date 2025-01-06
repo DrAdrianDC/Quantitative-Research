@@ -5,7 +5,7 @@
 Fourier transforms is a mathematical technique that decomposes a signal in the time domain into its underlying frequencies. By analyzing the frequency components of a signal, we can identify patterns and trends that may be difficult to see in the original data.
 
 
-To apply Fourier transforms to our financial data, we will first calculate the Fourier transform of the closing prices using the NumPy library. We will then plot the Fourier transforms alongside the actual closing prices to visualize the frequency components of the data.
+To apply Fourier transforms to our financial data, we will first calculate the Fourier transform of the closing prices using the NumPy library. This can help us to identify trends, cycles, and other patterns in the data that may not be apparent by simply looking at the raw stock prices. We will then plot the Fourier transforms alongside the actual closing prices to visualize the frequency components of the data.
 
 ## Code 
 

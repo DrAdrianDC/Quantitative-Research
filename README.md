@@ -14,7 +14,7 @@ This repository showcases a collection of Quantitative Analysis, end-to-end Mach
   - [2. Apple Stock Market Prediction](#2-Apple-Stock-Market-Prediction)
   - [3. Stock Price Prediction Using Markov Chains and Machine Learning](#3-Stock-Price-Prediction-Using-Markov-Chains-and-Machine-Learning)
   - [4. Stock Price Prediction Using Markov Chains and Machine Learning](#4-Stock-Price-Prediction-Using-Markov-Chains-and-Machine-Learning)
-  - [5. Stock Price Prediction Using Markov Chains and Machine Learning](#5-Stock-Price-Prediction-Using-Markov-Chains-and-Machine-Learning)
+  - [5. Stock Price Prediction using ARIMA Model](#5-Stock-Price-Prediction-using-ARIMA-Model)
  
 
 

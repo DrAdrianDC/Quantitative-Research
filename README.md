@@ -14,3 +14,10 @@ This repository showcases a collection of Quantitative Analysis, end-to-end Mach
   - [2. Apple Stock Market Prediction](#2-Apple-Stock-Market-Prediction)
   - [3. Stock Price Prediction Using Markov Chains and Machine Learning](#3-Stock-Price-Prediction-Using-Markov-Chains-and-Machine-Learning)
  
+
+
+## License
+
+This repository is licensed under the terms of the MIT license (See LICENSE.txt)
+
+

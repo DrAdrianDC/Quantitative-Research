@@ -19,8 +19,10 @@ This repository showcases a collection of Quantitative Analysis, end-to-end Mach
 
 
 
-## License
 
-This repository is licensed under the terms of the **MIT license** (See LICENSE.txt)
+## License
+This repository is licensed under a **Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License**. For more details, see the LICENSE file.
+
+
 
 

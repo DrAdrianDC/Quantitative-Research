@@ -2,7 +2,7 @@
 
 ### Importance and Potential Applications in Quantitative Analytics
 
-Physics-Informed Neural Networks (PINNs) offer a powerful method for solving complex differential equations that arise in various fields of quantitative analytics, such as fluid dynamics, heat transfer, and financial modeling. By embedding physical laws directly into the learning process, PINNs not only enhance the accuracy of predictions but also ensure that the solutions adhere to known scientific principles. This ability to solve real-world problems that are governed by differential equations makes PINNs highly valuable in industries such as engineering, climate modeling, and even predictive finance, where they can be used to model systems under uncertainty, optimize decision-making, and improve forecasts.
+Physics-Informed Neural Networks (PINNs) are an innovative approach that integrates physical laws with machine learning models, providing an efficient way to solve complex partial differential equations. This is particularly useful in quantitative analytics, where understanding system dynamics through modeling is crucial. In finance, PINNs can model systems like option pricing, risk analysis, and asset optimization, incorporating market dynamics and physical constraints directly into the models. Their ability to improve the accuracy of predictions while respecting known physical or economic principles makes PINNs an essential tool for tackling real-world challenges across diverse industries.
 
 ### Project Motivation
 

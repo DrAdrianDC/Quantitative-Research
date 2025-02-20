@@ -14,3 +14,15 @@ This project demonstrates the application of Physics-Informed Neural Networks (P
 
 * Generates an animated GIF to demonstrate the comparison over time or spatial coordinates.
 
+
+### Usage
+
+1- Ensure that the differential equation parameters are correctly defined in the Jupyter Notebook.
+
+2- Run the notebook to train the model and generate the animated GIF:
+
+```bash
+jupyter notebook PINN_solution.ipynb
+```
+
+3- The resulting GIF is saved in the results/ directory.

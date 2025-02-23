@@ -9,6 +9,9 @@ Physics-Informed Neural Networks (PINNs) are an innovative approach that integra
 This project demonstrates the application of Physics-Informed Neural Networks (PINNs) to solve partial differential equations. PINNs leverage neural networks that incorporate physics laws into their loss function, ensuring solutions respect both data-driven patterns and governing equations. The project visualizes the comparison between the analytical solution and the model's solution using an animated GIF.
 
 
+![Description](results/dnn_training.gif)
+
+
 ### Overview
 
 * Trains a PINN model to approximate the solution of a given differential equation.

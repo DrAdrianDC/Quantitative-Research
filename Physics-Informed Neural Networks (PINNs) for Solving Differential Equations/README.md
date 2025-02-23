@@ -2,7 +2,7 @@
 
 ### Importance and Potential Applications in Quantitative Analytics
 
-Physics-Informed Neural Networks (PINNs) are an innovative approach that integrates physical laws with machine learning models, providing an efficient way to solve complex partial differential equations. This is particularly useful in quantitative analytics, where 
+Physics-Informed Neural Networks (PINNs) are an innovative approach that integrates physical laws with machine learning models, providing an efficient way to solve complex partial differential equations. This is particularly useful in quantitative analytics, where the low of data availability is an issue in some biological and engineering systems for instance, which can make other Machine Learning techniques  ineffective. The PINNs also do not requiere labeled data, like results from experiments or simulations.
 
 ### Project Motivation
 

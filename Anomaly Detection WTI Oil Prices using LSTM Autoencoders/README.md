@@ -17,6 +17,7 @@ An LSTM autoencoder combines both of these concepts. It uses LSTM layers to lear
 
 
 
+![plot-anomalies](https://github.com/user-attachments/assets/bca4dac6-4ca0-44cd-88e6-d29bb5a5e591)
 
 
 

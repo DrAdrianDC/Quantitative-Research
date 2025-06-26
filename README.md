@@ -1,6 +1,6 @@
 # Quantitative Analytics
 
- Each project demonstrates the practical use of Quantitative Analysis,  advanced Machine Learning techniques to address real-world financial challenges
+This repository presents a collection of Quantitative Analysis, end-to-end Machine Learning, and Data Science projects centered on real-world applications in Finance. Each project demonstrates the practical use of Quantitative Analysis,  advanced Machine Learning techniques to address real-world financial challenges
 
 ## Overview
 

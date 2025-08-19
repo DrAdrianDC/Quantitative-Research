@@ -1,8 +1,9 @@
 # Quantitative Research
 
+## Overview
+
 This repository presents a collection of **Quantitative Research**, end-to-end **Machine Learning**, and **Data Science projects** centered on real-world applications in **finance**. Each project showcases the practical application of Quantitative Analysis and advanced Machine Learning techniques to solve real-world challenges in finance.
 
-## Overview
 
 ![ML-in-Finance](https://github.com/user-attachments/assets/87148c4d-21c7-418c-bdca-d78ab8882996)
 

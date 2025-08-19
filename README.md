@@ -12,9 +12,10 @@ This repository presents a collection of **Quantitative Research**, end-to-end *
 - [Projects Overview](#projects-overview)
   - [1. Anomaly Detection WTI Oil Prices using LSTM Autoencoders](#1-Anomaly-Detection-WTI-Oil-Prices-using-LSTM-Autoencoders)
   - [2. Apple Stock Market Prediction](#2-Apple-Stock-Market-Prediction)
-  - [3. Stock Prediction with Fourier Transform](#3-Stock-Prediction-with-Fourier-Transform)
-  - [4. Stock Price Prediction Using Markov Chains and Machine Learning](#4-Stock-Price-Prediction-Using-Markov-Chains-and-Machine-Learning)
-  - [5. Stock Price Prediction using ARIMA Model](#5-Stock-Price-Prediction-using-ARIMA-Model)
+  - [3. Apple Stock Market Prediction](#2-Apple-Stock-Market-Prediction)
+  - [4. Stock Prediction with Fourier Transform](#3-Stock-Prediction-with-Fourier-Transform)
+  - [5. Stock Price Prediction Using Markov Chains and Machine Learning](#4-Stock-Price-Prediction-Using-Markov-Chains-and-Machine-Learning)
+  - [6. Stock Price Prediction using ARIMA Model](#5-Stock-Price-Prediction-using-ARIMA-Model)
  
 
 

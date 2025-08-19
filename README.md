@@ -1,6 +1,6 @@
 # Quantitative Research
 
-This repository presents a collection of **Quantitative Research**, end-to-end **Machine Learning**, and **Data Science projects** centered on real-world applications in **finance**. Each project demonstrates the practical use of Quantitative Analysis,  advanced Machine Learning techniques to address real-world challenges in finance.
+This repository presents a collection of **Quantitative Research**, end-to-end **Machine Learning**, and **Data Science projects** centered on real-world applications in **finance**. Each project showcases the practical application of Quantitative Analysis and advanced Machine Learning techniques to solve real-world challenges in finance.
 
 ## Overview
 

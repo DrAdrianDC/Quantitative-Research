@@ -2,7 +2,8 @@
 
 🔴 Work in progress
 
-✅ Some green text
+![green text](https://img.shields.io/badge/Work-green)
+
 
 
 ### Importance and Potential Applications in Quantitative Analytics

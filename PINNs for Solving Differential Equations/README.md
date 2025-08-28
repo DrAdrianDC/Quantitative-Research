@@ -6,7 +6,7 @@
 
 ### What Are Physics-Informed Neural Networks (PINNs)?
 
-Physics-informed neural networks (PINNs) are neural networks that incorporate physical laws described by differential equations into their loss functions to guide the learning process toward solutions that are more consistent with the underlying physics. PINNs can be used to:
+**Physics-informed neural networks (PINNs)** are neural networks that incorporate physical laws described by differential equations into their loss functions to guide the learning process toward solutions that are more consistent with the underlying physics. PINNs can be used to:
 
    - Approximate solutions to partial differential equations (PDEs) and ordinary differential equations (ODEs).
    - Solve inverse problems, such as estimating model parameters from limited data.

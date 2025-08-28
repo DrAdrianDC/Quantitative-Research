@@ -1,6 +1,6 @@
 ## Physics-Informed Neural Networks (PINNs) for Solving Differential Equations
 
-Work in Progress
+<span style="color:red">Work in Progress</span>
 
 ### Importance and Potential Applications in Quantitative Analytics
 

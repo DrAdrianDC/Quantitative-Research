@@ -1,7 +1,6 @@
 ## Physics-Informed Neural Networks (PINNs) for Solving Differential Equations
 
-![Work in progress](https://img.shields.io/badge/Work-in-progress-FF0000?style=for-the-badge&logo=github&logoColor=white)
-
+![Work in progress](https://img.shields.io/badge/Work-in-progress-red)
 
 
 ### Importance and Potential Applications in Quantitative Analytics

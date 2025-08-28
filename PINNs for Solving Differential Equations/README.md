@@ -2,7 +2,7 @@
 
 🔴 Work in progress
 
-![green text](https://img.shields.io/badge/Work-in-progress-green)
+![green text](https://img.shields.io/badge/Work in progress-green)
 
 
 

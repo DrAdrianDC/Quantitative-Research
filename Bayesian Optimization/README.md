@@ -22,3 +22,14 @@ $$
 The true minimum is at **(x₁, x₂) = (2, 3)** with **f(x₁, x₂) = 0**, and the goal of Bayesian Optimization is to find this point efficiently.
 
 
+
+### Requirements
+
+Install the dependencies using:
+
+```bash
+pip install numpy scikit-optimize matplotlib
+```
+
+
+

@@ -23,8 +23,7 @@ This repository presents a collection of **Quantitative Research**, end-to-end *
 
 
 ## License
-This repository is licensed under a **Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License**. (See the LICENSE.txt file).
 
-
+This repository is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 

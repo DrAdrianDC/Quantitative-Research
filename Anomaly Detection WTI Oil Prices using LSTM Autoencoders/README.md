@@ -21,3 +21,15 @@ python src/pipeline.py --mode evaluate
 ```
 
 Setup, architecture and MLOps notes are in [Production/README.md](Production/README.md). Module-level detail is in [Production/DOCUMENTATION.md](Production/DOCUMENTATION.md).
+
+
+
+## Data
+
+Prices come from [yfinance](https://github.com/ranaroussi/yfinance): ticker `CL=F`, period `max`, unadjusted close. The loader retries transient Yahoo failures and rejects frames whose Close null ratio exceeds the configured cap.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
+
+

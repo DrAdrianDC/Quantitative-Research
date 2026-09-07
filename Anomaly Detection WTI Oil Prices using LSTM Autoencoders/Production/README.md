@@ -1,40 +1,39 @@
 # WTI Crude Oil Price Anomaly Detection
 
-Production pipeline for unsupervised anomaly detection on daily WTI futures (`CL=F`).
+An LSTM autoencoder for daily West Texas Intermediate futures (`CL=F`).
 
-An LSTM autoencoder learns to reconstruct 10-day windows of scaled close prices. Days whose reconstruction error exceeds a statistical threshold are flagged. The system is fully automated: data is pulled from Yahoo Finance, the model is trained or fine-tuned from the CLI, figures are written to `output_results/`, and a weekly GitHub Actions job can promote a new champion to the Hugging Face Hub only if a hold-out quality gate passes.
+The network is trained to reconstruct ten-day windows of scaled closing prices. It never sees event labels. A day is marked anomalous when its reconstruction error (mean squared error over the window) exceeds the 90th percentile of the error observed in training. That rule is enough to recover several well-known stress periods — including 20 April 2020, when WTI settled at −$37.63 — from the price path alone.
 
-Abnormal WTI moves have a direct read-through to energy and financial risk. The model is unsupervised — it is never given event labels. It has to recover known stress regimes from reconstruction error alone: the 2008 collapse, the 2015–2016 oil bust, March 2022, and 20 April 2020, the first negative WTI settlement.
+Data are downloaded from Yahoo Finance. Training, scoring and figures are driven from the command line; outputs land in `output_results/`. Optional weekly fine-tuning can publish a new model to the Hugging Face Hub only if hold-out error does not deteriorate beyond a fixed margin.
 
-Module-level detail: [DOCUMENTATION.md](DOCUMENTATION.md).  
-How to put this on GitHub, activate Actions, and seed Hugging Face: [PLAYBOOK.md](PLAYBOOK.md).
+Further reading: [DOCUMENTATION.md](DOCUMENTATION.md) (modules and workflow), [PLAYBOOK.md](PLAYBOOK.md) (GitHub and Hub).
 
 ## Results
 
-Close price with flagged anomalies:
+Closing price with days above the error threshold:
 
-![Anomaly Detection WTI Oil Price](output_results/plot-anomalies.png)
+![WTI close price with anomalous days highlighted](output_results/plot-anomalies.png)
 
-Reconstruction MSE versus the decision threshold:
+Reconstruction error over time, with the decision threshold:
 
-![Reconstruction Error Over Time](output_results/plot-reconstruction-error.png)
+![Reconstruction error versus threshold](output_results/plot-reconstruction-error.png)
 
-Champion metrics (max 100 epochs, EarlyStopping at 34, scored through 2026-09-04):
+Fitted model (up to 100 epochs, early stopping at 34; scores through 4 September 2026):
 
 | Metric | Value |
 | --- | --- |
-| Scored windows | 6,528 |
-| Anomalies (P90 MSE) | 623 (9.5%) |
-| Train MAE / hold-out MAE | 0.072 / 0.055 |
+| Windows scored | 6,528 |
+| Days above threshold (P90 MSE) | 623 (9.5%) |
+| Training MAE / hold-out MAE | 0.072 / 0.055 |
 | Best validation loss | 0.0060 |
 | Threshold | 0.0162 |
-| Strongest event | 2020-04-20, close −$37.63, MSE 0.270 |
+| Largest reconstruction error | 20 April 2020, close −$37.63, MSE 0.270 |
 
-The top reconstruction errors fall on 20–30 April 2020. The model also clusters 2008 (101 flags), 2015–2016, and March 2022. Hold-out MAE is below train MAE, which is the signature of a model that generalizes rather than memorizes.
+Hold-out MAE is lower than training MAE, which is consistent with a model that generalises rather than memorises the training windows.
 
 ## Architecture
 
-Daily unadjusted closes are downloaded with yfinance, scaled with `RobustScaler` (robust to fat tails and the 2020 negative print), and cut into continuous windows of shape `(n, 10, 1)`.
+Unadjusted daily closes are scaled with `RobustScaler` (appropriate for heavy tails and the negative 2020 print) and arranged as tensors of shape `(n, 10, 1)`.
 
 ```
 Input (batch, 10, 1)
@@ -46,28 +45,27 @@ Input (batch, 10, 1)
   → TimeDistributed Dense(1)
 ```
 
-Training objective is MSE reconstruction. The anomaly score is per-window MSE. The threshold is the 90th percentile of training MSE. The scaler is fitted on the training split only and is never refit during weekly fine-tuning, so the feature space stays frozen.
+The loss is reconstruction MSE. The scaler is fitted on the training split only and is left unchanged during later fine-tuning, so the feature space remains fixed.
 
 ## Project structure
 
 ```
-config.yaml                      runtime knobs (ticker, lookback, epochs, Hub)
+config.yaml                      ticker, lookback, epochs, Hub id
 requirements.txt
-DOCUMENTATION.md                 workflow and per-file reference
+DOCUMENTATION.md
 src/
-  config.py                      typed loader for config.yaml
-  data_loader.py                 yfinance download and validation
-  preprocessor.py                scaler + 3D lookback windows
-  model.py                       LSTM autoencoder (.keras)
-  plots.py                       PNG / HTML figures
+  config.py
+  data_loader.py
+  preprocessor.py
+  model.py
+  plots.py
   pipeline.py                    train | retrain | evaluate
-output_results/                  champion model, scores, plots
-.github/workflows/retrain.yaml   Sunday 00:00 UTC fine-tune
+output_results/                  model, scores, figures
 ```
 
 ## Setup
 
-Python 3.11+ recommended.
+Python 3.11 or later.
 
 ```bash
 python3 -m venv .venv
@@ -75,56 +73,46 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Known-good stack: NumPy 1.26, SciPy 1.14, TensorFlow 2.16.
+Versions known to import cleanly: NumPy 1.26, SciPy 1.14, TensorFlow 2.16.
 
 ## Usage
 
-Train a champion on the full `CL=F` history and write model, CSVs and plots. Skip the Hub upload on a local machine:
+Train on the full `CL=F` history (writes the model, CSVs and figures; skips Hugging Face):
 
 ```bash
 python src/pipeline.py --mode train --skip-upload
 ```
 
-Score the saved champion and refresh reports without training:
+Score the saved model and refresh reports without training:
 
 ```bash
 python src/pipeline.py --mode evaluate
 ```
 
-Fine-tune on the latest window. The current champion is scored on a recent hold-out, a challenger is trained for a few epochs, and the challenger is promoted only if hold-out MAE does not degrade by more than 10%:
+Fine-tune on recent data. The current model is scored on a hold-out window, a candidate is trained for a few epochs, and the candidate is kept only if hold-out MAE does not rise by more than 10%:
 
 ```bash
 python src/pipeline.py --mode retrain
 ```
 
-If no local model exists, `retrain` bootstraps a full `train` run.
+If no saved model is present, `retrain` starts a full `train` run.
 
 ## Configuration
 
-All runtime parameters live in `config.yaml`: ticker (`CL=F`), lookback (10), scaler (`robust`), batch size, train vs retrain epochs, threshold percentile, Hugging Face `repo_id`, and every filename under `output_results/`.
-
-Set your Hub repository before enabling uploads:
+Runtime settings live in `config.yaml`: ticker (`CL=F`), lookback (10), scaler (`robust`), batch size, training versus fine-tune epochs, threshold percentile, Hugging Face `repo_id`, and filenames under `output_results/`.
 
 ```yaml
 huggingface:
-  repo_id: "your-user/wti-lstm-autoencoder"
+  repo_id: "DrAdrianDC/wti-lstm-autoencoder"
 ```
 
-## MLOps
+## Operations
 
-`.github/workflows/retrain.yaml` runs every Sunday at 00:00 UTC and on `workflow_dispatch`. It installs dependencies and runs:
-
-```bash
-python src/pipeline.py --mode retrain
-```
-
-Retrain is **weekly** (Sunday 00:00 UTC), not daily: WTI adds one trading bar per session, so a daily fine-tune is noise. Manual runs use `workflow_dispatch` after the Hub is seeded (see the playbook).
-
-Configure the `HF_TOKEN` repository secret to publish. If the secret is missing, retrain still completes and the job stays green; only the Hub upload is skipped. A rejected challenger leaves the champion untouched.
+A GitHub Actions workflow can run `python src/pipeline.py --mode retrain` on Sundays at 00:00 UTC. WTI adds one trading bar per session, so a daily retrain would add noise rather than information. Set the `HF_TOKEN` secret to publish; if it is absent, training still finishes and the job remains green. If the hold-out check fails, the previous model is left unchanged.
 
 ## Data
 
-Prices come from [yfinance](https://github.com/ranaroussi/yfinance): ticker `CL=F`, period `max`, unadjusted close. The loader retries transient Yahoo failures and rejects frames whose Close null ratio exceeds the configured cap.
+Prices come from [yfinance](https://github.com/ranaroussi/yfinance) (`CL=F`, period `max`, unadjusted close). The loader retries transient Yahoo failures and rejects series whose Close null ratio exceeds the configured limit.
 
 ## License
 

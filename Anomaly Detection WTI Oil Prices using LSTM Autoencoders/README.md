@@ -1,42 +1,23 @@
-# Anomaly Detection WTI Oil Prices using LSTM Autoencoders
+# Anomaly Detection on WTI Oil Prices (LSTM Autoencoder)
 
-The ability to detect anomalies in crude oil prices has practical application in the financial and energy sectors. Detecting abnormal price movements early can help to make informed decisions and mitigate potential risks. The main goal of this project is to build an Anomaly Detection model based on LSTM Autoencoders for the time series of the WTI Oil Prices. 
+Unsupervised detection of abnormal daily WTI futures moves (`CL=F`).
 
-Stock prices over days/months/years are a clear example of time series. The time series data has a unique aspect, past values can be used to predict future values. However, sometimes unpredictable anomalies can occur. Nowadays, the Artificial Intelligence algorithms are a powerfull tool to address this challenging problem. In specific, this project illustrate the performance of LSTM autoencoder.
+This folder holds two stages of the same case:
 
+| Folder | What it is |
+| --- | --- |
+| **[Production/](Production/)** | Modular pipeline, champion model, scores and plots. Start here. |
+| **[R&D/](R&D/)** | Original research notebook, `.h5` weights and early figures. |
 
-LSTM stands for Long Short-Term Memory. LSTMs are a type of Recurrent Neural Network (RNN) designed to model temporal sequences and long-range dependencies more accurately than regular Recurrent Neural Networks.
+![Anomaly Detection WTI Oil Price](Production/output_results/plot-anomalies.png)
 
+The production champion flags 20 April 2020 (WTI at −$37.63) as the strongest reconstruction error, and also clusters 2008, 2015–2016 and March 2022.
 
-An autoencoder is a type of neural network designed to copy its input to its output. Internally, it has a hidden layer that encodes the input into a representation. By training the network to minimize the difference between the input and output, it learns efficient data encodings in the hidden layer.
+To run the pipeline:
 
+```bash
+cd Production
+python src/pipeline.py --mode evaluate
+```
 
-An LSTM autoencoder combines both of these concepts. It uses LSTM layers to learn representations of temporal input sequences. The training process creates two LSTM models — an encoder to reduce sequences into vector representations and a decoder that tries to replicate vectors back to original sequences.
-
-
-
-
-
-![plot-anomalies](https://github.com/user-attachments/assets/bca4dac6-4ca0-44cd-88e6-d29bb5a5e591)
-
-
-
-# Requirements
-
-* Python 3.8.3
-* TensorFlow 2.10.0
-* Pandas 1.0.5
-* Numpy 1.23.4
-* Scikit-learn 1.3.2
-* Keras 2.10.0
-
-
-# Dataset
-
-In this project I am using the open source yfinance library to get financial data from Yahoo Finance.
-
-
-
-# License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Setup, architecture and MLOps notes are in [Production/README.md](Production/README.md). Module-level detail is in [Production/DOCUMENTATION.md](Production/DOCUMENTATION.md).

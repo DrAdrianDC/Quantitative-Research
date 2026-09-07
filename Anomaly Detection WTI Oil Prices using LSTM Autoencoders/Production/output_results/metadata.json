@@ -1,0 +1,44 @@
+{
+  "mode": "train",
+  "ticker": "CL=F",
+  "last_date": "2026-09-04",
+  "lookback": 10,
+  "scaler_type": "robust",
+  "threshold": 0.016175970621407035,
+  "threshold_percentile": 90.0,
+  "train_mae": 0.07239414751529694,
+  "val_mae": 0.054988060146570206,
+  "n_train_windows": 5220,
+  "n_val_windows": 1299,
+  "best_val_loss": 0.005959452595561743,
+  "epochs_trained": 34,
+  "trained_at": "2026-09-05T08:15:37+00:00",
+  "model": {
+    "name": "wti_lstm_autoencoder",
+    "input_shape": [
+      null,
+      10,
+      1
+    ],
+    "output_shape": [
+      null,
+      10,
+      1
+    ],
+    "trainable_params": 62529
+  },
+  "n_windows_scored": 6528,
+  "n_anomalies": 623,
+  "anomaly_rate": 0.09543504901960784,
+  "first_anomaly_date": "2000-09-27",
+  "last_anomaly_date": "2026-08-05",
+  "max_anomaly_mse": 0.2696591317653656,
+  "plots": {
+    "price_plot": "plot.png",
+    "anomalies_plot": "plot-anomalies.png",
+    "reconstruction_plot": "plot-reconstruction-error.png",
+    "loss_plot": "plot-training-loss.png",
+    "anomalies_html": "plot-anomalies.html",
+    "reconstruction_html": "plot-reconstruction-error.html"
+  }
+}

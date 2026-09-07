@@ -1,0 +1,76 @@
+# =============================================================================
+# WTI LSTM Autoencoder — central configuration
+# All runtime knobs live here so training, retraining and CI stay aligned.
+# =============================================================================
+
+data:
+  ticker: "CL=F"
+  # yfinance period used when start_date is null (full available history).
+  period: "max"
+  start_date: null
+  end_date: null
+  auto_adjust: false
+  # Chronological hold-out. If null, the last `validation_fraction` is used.
+  train_end_date: null
+  validation_fraction: 0.20
+  max_null_ratio: 0.05
+  download_retries: 3
+  retry_backoff_seconds: 2.0
+
+preprocessing:
+  # Notebook used RobustScaler (MinMax/Standard were evaluated and discarded).
+  # RobustScaler is the right default for WTI: heavy tails and the 2020
+  # negative-price event would distort MinMax/Standard statistics.
+  scaler_type: "robust"
+  lookback: 10
+  target_column: "Close"
+  date_column: "Date"
+
+model:
+  encoder_units: [64, 32]
+  decoder_units: [32, 64]
+  dropout: 0.25
+  activation: "relu"
+  loss: "mse"
+  optimizer: "adam"
+  clipnorm: 1.0
+  # Anomaly threshold is the 90th percentile of per-window reconstruction MSE.
+  threshold_percentile: 90.0
+
+training:
+  epochs: 100
+  batch_size: 32
+  patience: 10
+  seed: 1
+  shuffle: false
+
+retrain:
+  epochs: 8
+  patience: 3
+  # Extra calendar days fetched before last_date so LSTM windows stay continuous.
+  context_days: 365
+  # Champion/challenger: accept challenger if hold-out MAE does not degrade
+  # more than this relative margin versus the current champion.
+  max_degradation_ratio: 0.10
+  min_sequences: 32
+
+output_results:
+  directory: "output_results"
+  model_filename: "lstm_autoencoder.keras"
+  scaler_filename: "scaler.pkl"
+  metadata_filename: "metadata.json"
+  scores_filename: "reconstruction_scores.csv"
+  anomalies_filename: "detected_anomalies.csv"
+  history_filename: "training_history.csv"
+  price_plot_filename: "plot.png"
+  anomalies_plot_filename: "plot-anomalies.png"
+  reconstruction_plot_filename: "plot-reconstruction-error.png"
+  loss_plot_filename: "plot-training-loss.png"
+  anomalies_html_filename: "plot-anomalies.html"
+  reconstruction_html_filename: "plot-reconstruction-error.html"
+
+huggingface:
+  # Must match the Hub model you create in PLAYBOOK.md Step 4.
+  repo_id: "DrAdrianDC/wti-lstm-autoencoder"
+  repo_type: "model"
+  private: false

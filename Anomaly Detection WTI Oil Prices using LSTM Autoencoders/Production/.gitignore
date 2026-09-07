@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.env
+.python-version
+
+# Keep the champion on GitHub (this is the portfolio copy).
+# Ignore only accidental Keras 2 dumps.
+*.h5
+
+# Notebook / editor
+.ipynb_checkpoints/
+.idea/
+.vscode/
+.DS_Store
+
+# Test / coverage
+.pytest_cache/
+.coverage
+htmlcov/

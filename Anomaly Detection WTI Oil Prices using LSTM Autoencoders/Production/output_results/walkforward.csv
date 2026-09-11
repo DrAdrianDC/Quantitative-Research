@@ -1,0 +1,4 @@
+train_end,test_end,n_train_windows,threshold,n_test_days,n_flags,flag_rate,n_episodes,n_events_in_block,event_recall,events_hit,lstm_only_events,vol_only_events,vol_recall
+2013-12-31,2016-12-31,755,2.5282868957519566,754,10,0.013262599469496022,3,4,0.0,0,,,0.0
+2016-12-31,2019-12-31,1365,0.49088521718978834,754,67,0.08885941644562334,30,2,1.0,2,Q4-18 inventory dump|Q4-18 Christmas selloff,,0.0
+2019-12-31,2026-12-31,1974,0.23055221661925315,1683,197,0.11705288175876412,47,10,0.8,8,Israel–Hamas oil spike,2022 mid-year liquidation,0.8

@@ -6,6 +6,7 @@ import logging
 import re
 import time
 from datetime import date, datetime
+from pathlib import Path
 from typing import Any
 
 import pandas as pd
@@ -246,3 +247,73 @@ def last_available_date(frame: pd.DataFrame) -> pd.Timestamp:
     if frame.empty or "Date" not in frame.columns:
         raise DataValidationError("Price frame is empty or missing a Date column.")
     return pd.Timestamp(frame["Date"].max())
+
+
+def load_price_snapshot(path: str | Path) -> pd.DataFrame:
+    """Load a committed Date/Close snapshot (offline fallback / provenance)."""
+    source = Path(path)
+    if not source.exists():
+        raise DataDownloadError(f"Price snapshot not found: {source}")
+    frame = pd.read_csv(source)
+    if "Date" not in frame.columns or "Close" not in frame.columns:
+        raise DataValidationError(f"Snapshot {source} must have Date and Close columns.")
+    frame = frame[["Date", "Close"]].copy()
+    frame["Date"] = pd.to_datetime(frame["Date"], utc=True, errors="coerce")
+    if frame["Date"].isna().any():
+        raise DataValidationError(f"Snapshot {source} has unparseable dates.")
+    frame["Date"] = frame["Date"].dt.tz_convert(None).dt.normalize()
+    frame["Close"] = pd.to_numeric(frame["Close"], errors="coerce")
+    frame = frame.dropna(subset=["Close"]).drop_duplicates(subset=["Date"], keep="last")
+    frame = frame.sort_values("Date").reset_index(drop=True)
+    if frame.empty:
+        raise DataValidationError(f"Snapshot {source} has no usable rows.")
+    logger.info(
+        "Loaded %s snapshot rows from %s (%s → %s).",
+        len(frame),
+        source.name,
+        frame["Date"].iloc[0].date(),
+        frame["Date"].iloc[-1].date(),
+    )
+    return frame
+
+
+def load_wti_prices(
+    *,
+    ticker: str,
+    start: str | date | datetime | None,
+    end: str | date | datetime | None,
+    period: str,
+    auto_adjust: bool,
+    max_null_ratio: float,
+    retries: int,
+    retry_backoff_seconds: float,
+    snapshot_path: str | Path | None = None,
+) -> pd.DataFrame:
+    """Download CL=F, falling back to the committed snapshot if Yahoo is down."""
+    try:
+        return download_wti_prices(
+            ticker,
+            start=start,
+            end=end,
+            period=period,
+            auto_adjust=auto_adjust,
+            max_null_ratio=max_null_ratio,
+            retries=retries,
+            retry_backoff_seconds=retry_backoff_seconds,
+        )
+    except (DataDownloadError, DataValidationError) as exc:
+        if snapshot_path is None:
+            raise
+        logger.warning("Live download failed (%s). Falling back to snapshot.", exc)
+        return load_price_snapshot(snapshot_path)
+
+
+def write_price_snapshot(frame: pd.DataFrame, path: str | Path) -> Path:
+    """Persist Date/Close for offline reruns. See DATA_PROVENANCE in the README."""
+    destination = Path(path)
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    out = frame[["Date", "Close"]].copy()
+    out["Date"] = pd.to_datetime(out["Date"]).dt.strftime("%Y-%m-%d")
+    out.to_csv(destination, index=False)
+    logger.info("Wrote price snapshot to %s (%s rows).", destination, len(out))
+    return destination

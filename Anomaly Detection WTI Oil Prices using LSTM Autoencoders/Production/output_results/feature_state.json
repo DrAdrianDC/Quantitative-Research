@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "lookback": 10,
+  "vol_lookback": 60,
+  "min_scale_floor": 0.05,
+  "scale_floor_quantile": 0.05,
+  "max_train_vol_percentile": 95.0,
+  "scale_floor": 0.6597565475463867,
+  "quiet_vol_cutoff": 1.9422080360412597,
+  "target_column": "Close",
+  "date_column": "Date",
+  "feature": {
+    "lookback": 10,
+    "vol_lookback": 60,
+    "scale_floor": 0.6597565475463867,
+    "mad_to_std": 1.4826,
+    "date_column": "Date",
+    "target_column": "Close"
+  },
+  "return_zscore": {
+    "percentile": 99.0,
+    "median": 0.04000091552734375,
+    "mad": 0.7600021362304688,
+    "scale": 1.126779167175293,
+    "threshold": 3.6255526038840564
+  },
+  "vol_baseline": {
+    "lookback": 10.0,
+    "percentile": 99.0,
+    "threshold": 3.053047302467789
+  }
+}

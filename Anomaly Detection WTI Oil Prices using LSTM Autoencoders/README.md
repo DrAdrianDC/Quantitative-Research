@@ -2,9 +2,11 @@
 
 West Texas Intermediate (WTI) is a primary benchmark for global crude oil. Large, unexpected moves in its daily price — the 2008 collapse, the 2015–2016 downturn, March 2022, or 20 April 2020, when the contract settled below zero for the first time — are the observations that matter for hedging and energy risk. This project asks whether those days can be recovered from the price history alone, without a labelled list of “events”.
 
-The model is an **LSTM autoencoder**. It reads a window of ten consecutive closing prices and is trained only to reconstruct that window. On typical trading days the copy is close. When the path of prices leaves the pattern the network has learned, the reconstruction error increases. Days whose error exceeds a statistical threshold (the 90th percentile of training error) are treated as anomalies.
+The live, maintained pipeline is the standalone repository **[DrAdrianDC/WTI_Anomaly_Detection](https://github.com/DrAdrianDC/WTI_Anomaly_Detection)**. The `Production/` folder here is a snapshot of that repo.
 
-The figure uses the production model on the full WTI futures series (Yahoo Finance ticker `CL=F`). The highest reconstruction error is 20 April 2020 (close −$37.63). The same scoring also highlights late 2008, the 2015–2016 oil bust, and the March 2022 spike.
+The production model is an **LSTM autoencoder** on 10-day windows of locally vol-normalized ΔClose (USD/bbl). A day is flagged when reconstruction MSE exceeds the 99th percentile of *quiet* 2010–2019 error. That threshold is frozen. 2020–present is out of sample.
+
+The figure uses the production model on the full WTI futures series (Yahoo Finance ticker `CL=F`). The 20 April 2020 negative print remains the standout; the same scoring also highlights late 2008, COVID-era March–April 2020, and the March 2022 spike.
 
 ![WTI close price with anomalous days highlighted](Production/output_results/plot-anomalies.png)
 
@@ -12,7 +14,7 @@ The figure uses the production model on the full WTI futures series (Yahoo Finan
 
 | Folder | Contents |
 | --- | --- |
-| **[Production/](Production/)** | Training pipeline, saved Keras model, scores and figures. This is the version to run and to review. |
+| **[Production/](Production/)** | Snapshot of the standalone pipeline (training code, scores and figures). Prefer the live repo for Actions, Hub weights and weekly updates. |
 | **[R&D/](R&D/)** | Original Jupyter notebook, Keras `.h5` weights and the first research plots. |
 
 ```bash
@@ -20,8 +22,9 @@ cd Production
 python src/pipeline.py --mode evaluate
 ```
 
-Setup, architecture and commands: [Production/README.md](Production/README.md).  
+Setup, architecture and commands: [Production/README.md](Production/README.md).
 Module-level reference: [Production/DOCUMENTATION.md](Production/DOCUMENTATION.md).
+Live repo: [DrAdrianDC/WTI_Anomaly_Detection](https://github.com/DrAdrianDC/WTI_Anomaly_Detection).
 
 ## Data
 

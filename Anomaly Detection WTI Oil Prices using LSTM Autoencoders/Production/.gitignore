@@ -3,12 +3,14 @@ __pycache__/
 *.py[cod]
 *.egg-info/
 .venv/
+.venv_new/
 venv/
 .env
 .python-version
 
-# Keep the champion on GitHub (this is the portfolio copy).
-# Ignore only accidental Keras 2 dumps.
+# Native Keras weights and the JSON feature state in output_results/ are tracked
+# so a clone can evaluate without the Hub. Reject pickle and legacy HDF5.
+*.pkl
 *.h5
 
 # Notebook / editor

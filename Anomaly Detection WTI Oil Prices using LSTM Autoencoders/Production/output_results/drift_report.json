@@ -1,0 +1,62 @@
+{
+  "data_drift": {
+    "kind": "data_drift",
+    "psi_normalized_return": 0.052136168831467926,
+    "psi_normalized_return_band": "stable",
+    "ks_normalized_return": 0.06922188127438722,
+    "psi_local_scale": 2.8825722519375785,
+    "psi_local_scale_band": "significant",
+    "ks_local_scale": 0.40990453460620524,
+    "median_x_expected": 0.033382468602570436,
+    "median_x_actual": 0.08569005054413023,
+    "median_scale_expected": 1.1490172622680663,
+    "median_scale_actual": 1.2787399549484253,
+    "psi_warn": 0.1,
+    "psi_alert": 0.25,
+    "alert": false,
+    "warn": false
+  },
+  "concept_drift": {
+    "kind": "concept_drift",
+    "quiet_mse_expected_mean": 0.08919644323884982,
+    "quiet_mse_actual_mean": 0.9149038036829317,
+    "quiet_mse_expected_median": 0.047715406864881516,
+    "quiet_mse_actual_median": 0.07197971642017365,
+    "degradation_ratio": 0.5085214849786943,
+    "max_degradation_ratio": 0.1,
+    "allowed_median": 0.05248694755136967,
+    "alert": true,
+    "n_expected": 2393,
+    "n_actual": 143,
+    "note": "Alert uses the median of quiet-day MSE. The mean is reported but is dominated by leftover ringing from overlapping windows."
+  },
+  "baselines": {
+    "n_lstm_flags": 368,
+    "n_zscore_flags": 169,
+    "n_lstm_and_zscore": 57,
+    "n_lstm_only_vs_zscore": 311,
+    "n_zscore_only": 112,
+    "peak_abs_z_date": "2020-04-20",
+    "peak_abs_z": 49.645932469306715,
+    "n_vol_flags": 320,
+    "n_lstm_and_vol": 126,
+    "n_lstm_only_vs_vol": 242,
+    "n_vol_only": 194,
+    "jaccard_lstm_vol": 0.22419928825622776
+  },
+  "baselines_oos": {
+    "n_lstm_flags": 174,
+    "n_zscore_flags": 87,
+    "n_lstm_and_zscore": 39,
+    "n_lstm_only_vs_zscore": 135,
+    "n_zscore_only": 48,
+    "peak_abs_z_date": "2020-04-20",
+    "peak_abs_z": 49.645932469306715,
+    "n_vol_flags": 193,
+    "n_lstm_and_vol": 95,
+    "n_lstm_only_vs_vol": 79,
+    "n_vol_only": 98,
+    "jaccard_lstm_vol": 0.3492647058823529
+  },
+  "generated_at": "2026-09-10T14:47:04+00:00"
+}

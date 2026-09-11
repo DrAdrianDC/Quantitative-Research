@@ -1,0 +1,5 @@
+# Generated HTML should not dominate language stats.
+*.html linguist-generated
+*.html linguist-documentation
+
+*.keras binary

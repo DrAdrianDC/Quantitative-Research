@@ -1,76 +1,133 @@
 # =============================================================================
-# WTI LSTM Autoencoder — central configuration
-# All runtime knobs live here so training, retraining and CI stay aligned.
+# WTI LSTM autoencoder — monitor configuration
+# All runtime knobs live here so training, evaluate, CI and the Hub stay aligned.
 # =============================================================================
 
 data:
   ticker: "CL=F"
-  # yfinance period used when start_date is null (full available history).
   period: "max"
   start_date: null
   end_date: null
   auto_adjust: false
-  # Chronological hold-out. If null, the last `validation_fraction` is used.
-  train_end_date: null
-  validation_fraction: 0.20
+  # Calibration window for the loss, the P99 threshold, and the baselines.
+  # The network does NOT see Close in USD. It sees 10-day windows of
+  # ΔClose / local MAD, so $30 oil vs $100 oil is not "concept drift"
+  # by itself — local scale is divided out. The date cut is about which
+  # *normalized shapes* count as ordinary, and about keeping crises out
+  # of the loss: GFC 2008 is before start, COVID 2020 is after end.
+  # Scoring still uses the full tape.
+  train_start_date: "2010-01-01"
+  train_end_date: "2019-12-31"
+  # Fraction of *quiet* calibration windows held out for early stopping.
+  # Not a test set. The test set is the calendar tail after train_end_date.
+  validation_fraction: 0.15
   max_null_ratio: 0.05
   download_retries: 3
   retry_backoff_seconds: 2.0
+  # Offline fallback when yfinance is unreachable (CI, air-gapped review).
+  snapshot_filename: "price_snapshot.csv"
 
 preprocessing:
-  # Notebook used RobustScaler (MinMax/Standard were evaluated and discarded).
-  # RobustScaler is the right default for WTI: heavy tails and the 2020
-  # negative-price event would distort MinMax/Standard statistics.
-  scaler_type: "robust"
   lookback: 10
+  vol_lookback: 60
+  # USD/bbl MAD floor is frozen at train from the 5th percentile of causal
+  # scales, never below this absolute minimum.
+  min_scale_floor: 0.05
+  scale_floor_quantile: 0.05
+  # Drop the loudest calibration windows from the training loss so the
+  # network learns background dynamics, not crises.
+  max_train_vol_percentile: 95.0
   target_column: "Close"
   date_column: "Date"
 
 model:
   encoder_units: [64, 32]
   decoder_units: [32, 64]
-  dropout: 0.25
-  activation: "relu"
+  dropout: 0.1
+  activation: "tanh"
   loss: "mse"
   optimizer: "adam"
   clipnorm: 1.0
-  # Anomaly threshold is the 90th percentile of per-window reconstruction MSE.
-  threshold_percentile: 90.0
+  # Decision threshold: P99 of *quiet calibration* reconstruction MSE.
+  # P90 flags ~10% of days and is too noisy for a monitor. Do not lower
+  # this to decorate a plot.
+  threshold_percentile: 99.0
+  # Written by `train`. Evaluate/retrain must not recompute it.
+  frozen_threshold: 0.3816215467453002
 
 training:
-  epochs: 100
+  epochs: 200
   batch_size: 32
-  patience: 10
+  patience: 30
+  min_delta: 0.0001
   seed: 1
   shuffle: false
+  # Never train on the full series. Calibrate, then freeze.
+  full_history: false
+  run_walkforward: true
+
+baseline:
+  percentile: 99.0
+
+drift:
+  psi_warn: 0.10
+  psi_alert: 0.25
+  quiet_mae_degradation: 0.10
+  rolling_psi_window: 63
+  recent_days: 252
 
 retrain:
+  # Weekly CI runs evaluate + drift, not this path. Retrain is a human
+  # decision after concept drift on quiet days, via workflow_dispatch.
   epochs: 8
   patience: 3
-  # Extra calendar days fetched before last_date so LSTM windows stay continuous.
   context_days: 365
-  # Champion/challenger: accept challenger if hold-out MAE does not degrade
-  # more than this relative margin versus the current champion.
   max_degradation_ratio: 0.10
   min_sequences: 32
+  # Tune / early-stop / gate on the recent window. Gate is never the
+  # early-stopping set (that leak used to auto-approve challengers).
+  tune_fraction: 0.60
+  earlystop_fraction: 0.20
+  # Integrity check on the published ledger (OOS events the champion flagged).
+  # Populated after the first train from event recall; keep 2020-04-20 always.
+  acceptance_event_dates:
+    - "2020-04-20"
+
+walkforward:
+  epochs: 200
+  patience: 30
+  folds:
+    - train_end: "2013-12-31"
+      test_end: "2016-12-31"
+    - train_end: "2016-12-31"
+      test_end: "2019-12-31"
+    - train_end: "2019-12-31"
+      test_end: "2026-12-31"
 
 output_results:
   directory: "output_results"
   model_filename: "lstm_autoencoder.keras"
-  scaler_filename: "scaler.pkl"
+  # JSON feature state (no pickle). Replaces scaler.pkl.
+  state_filename: "feature_state.json"
   metadata_filename: "metadata.json"
   scores_filename: "reconstruction_scores.csv"
   anomalies_filename: "detected_anomalies.csv"
   history_filename: "training_history.csv"
+  drift_filename: "drift_report.json"
+  events_filename: "event_metrics.json"
+  walkforward_filename: "walkforward.csv"
   price_plot_filename: "plot.png"
   anomalies_plot_filename: "plot-anomalies.png"
   reconstruction_plot_filename: "plot-reconstruction-error.png"
   loss_plot_filename: "plot-training-loss.png"
   anomalies_html_filename: "plot-anomalies.html"
   reconstruction_html_filename: "plot-reconstruction-error.html"
+  zscore_plot_filename: "plot-zscore.png"
+  vol_plot_filename: "plot-vol-baseline.png"
+  drift_plot_filename: "plot-drift.png"
+  magnitude_plot_filename: "plot-magnitude.png"
 
 huggingface:
-  # Must match the Hub model you create in PLAYBOOK.md Step 4.
   repo_id: "DrAdrianDC/wti-lstm-autoencoder"
   repo_type: "model"
   private: false

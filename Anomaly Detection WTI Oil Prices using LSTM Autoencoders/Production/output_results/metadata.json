@@ -1,18 +1,18 @@
 {
   "mode": "train",
+  "instrument": "anomaly_monitor",
   "ticker": "CL=F",
-  "last_date": "2026-09-04",
+  "last_date": "2026-09-10",
   "lookback": 10,
-  "scaler_type": "robust",
-  "threshold": 0.016175970621407035,
-  "threshold_percentile": 90.0,
-  "train_mae": 0.07239414751529694,
-  "val_mae": 0.054988060146570206,
-  "n_train_windows": 5220,
-  "n_val_windows": 1299,
-  "best_val_loss": 0.005959452595561743,
-  "epochs_trained": 34,
-  "trained_at": "2026-09-05T08:15:37+00:00",
+  "vol_lookback": 60,
+  "scale_floor": 0.6597565475463867,
+  "quiet_vol_cutoff": 1.9422080360412597,
+  "threshold": 0.38162154674530024,
+  "threshold_frozen": true,
+  "threshold_percentile": 99.0,
+  "train_mae": 0.1872362196445465,
+  "earlystop_mae": 0.28704872727394104,
+  "trained_at": "2026-09-10T14:46:59+00:00",
   "model": {
     "name": "wti_lstm_autoencoder",
     "input_shape": [
@@ -27,16 +27,802 @@
     ],
     "trainable_params": 62529
   },
-  "n_windows_scored": 6528,
-  "n_anomalies": 623,
-  "anomaly_rate": 0.09543504901960784,
-  "first_anomaly_date": "2000-09-27",
-  "last_anomaly_date": "2026-08-05",
-  "max_anomaly_mse": 0.2696591317653656,
+  "calibration": {
+    "n_calibration_rows": 2514,
+    "n_valid_windows": 2444,
+    "n_quiet_windows": 2323,
+    "n_train_windows": 1974,
+    "n_earlystop_windows": 349,
+    "scale_floor": 0.6597565475463867,
+    "quiet_vol_cutoff": 1.9422080360412597,
+    "train_start_date": "2010-01-04",
+    "train_end_date": "2019-12-31"
+  },
+  "epochs_trained": 200,
+  "best_earlystop_loss": 0.21818621456623077,
+  "best_epoch": 194,
+  "n_windows_scored": 6470,
+  "n_anomalies": 368,
+  "anomaly_rate": 0.05687789799072643,
+  "first_date": "2000-12-04",
+  "first_anomaly_date": "2000-12-21",
+  "last_anomaly_date": "2026-04-21",
+  "max_anomaly_mse": 231.7071075439453,
+  "max_anomaly_date": "2020-04-28",
+  "evaluation": {
+    "full": {
+      "n_days": 6470,
+      "n_flags": 368,
+      "flag_rate": 0.05687789799072643,
+      "n_episodes": 130,
+      "median_episode_length": 1.0,
+      "max_episode_length": 32,
+      "oos_event_recall": 0.9,
+      "oos_events_hit": 9,
+      "oos_events_total": 10,
+      "calibration_event_recall": 0.14285714285714285,
+      "calibration_events_hit": 1,
+      "calibration_events_total": 7,
+      "events": [
+        {
+          "date": "2001-09-17",
+          "name": "9/11 session reopen",
+          "era": "pre",
+          "nearest_trading_day": "2001-09-17",
+          "hit": 1
+        },
+        {
+          "date": "2003-03-20",
+          "name": "Iraq invasion",
+          "era": "pre",
+          "nearest_trading_day": "2003-03-20",
+          "hit": 1
+        },
+        {
+          "date": "2008-07-11",
+          "name": "WTI cycle high (~$147)",
+          "era": "pre",
+          "nearest_trading_day": "2008-07-11",
+          "hit": 0
+        },
+        {
+          "date": "2008-10-10",
+          "name": "GFC crash week",
+          "era": "pre",
+          "nearest_trading_day": "2008-10-10",
+          "hit": 1
+        },
+        {
+          "date": "2008-12-19",
+          "name": "GFC WTI trough",
+          "era": "pre",
+          "nearest_trading_day": "2008-12-19",
+          "hit": 0
+        },
+        {
+          "date": "2011-05-05",
+          "name": "2011 risk-off dump",
+          "era": "calibration",
+          "nearest_trading_day": "2011-05-05",
+          "hit": 0
+        },
+        {
+          "date": "2014-11-28",
+          "name": "OPEC Thanksgiving no-cut",
+          "era": "calibration",
+          "nearest_trading_day": "2014-11-28",
+          "hit": 0
+        },
+        {
+          "date": "2015-08-24",
+          "name": "2015 China deval / risk-off",
+          "era": "calibration",
+          "nearest_trading_day": "2015-08-24",
+          "hit": 0
+        },
+        {
+          "date": "2016-01-20",
+          "name": "2014\u201316 glut cycle low",
+          "era": "calibration",
+          "nearest_trading_day": "2016-01-20",
+          "hit": 0
+        },
+        {
+          "date": "2016-02-11",
+          "name": "WTI sub-$30 trough",
+          "era": "calibration",
+          "nearest_trading_day": "2016-02-11",
+          "hit": 0
+        },
+        {
+          "date": "2018-11-13",
+          "name": "Q4-18 inventory dump",
+          "era": "calibration",
+          "nearest_trading_day": "2018-11-13",
+          "hit": 0
+        },
+        {
+          "date": "2018-12-24",
+          "name": "Q4-18 Christmas selloff",
+          "era": "calibration",
+          "nearest_trading_day": "2018-12-24",
+          "hit": 1
+        },
+        {
+          "date": "2020-03-09",
+          "name": "OPEC+ price war",
+          "era": "oos",
+          "nearest_trading_day": "2020-03-09",
+          "hit": 1
+        },
+        {
+          "date": "2020-03-18",
+          "name": "COVID demand collapse",
+          "era": "oos",
+          "nearest_trading_day": "2020-03-18",
+          "hit": 1
+        },
+        {
+          "date": "2020-04-20",
+          "name": "WTI negative settlement",
+          "era": "oos",
+          "nearest_trading_day": "2020-04-20",
+          "hit": 1
+        },
+        {
+          "date": "2020-04-21",
+          "name": "Post-negative bounce",
+          "era": "oos",
+          "nearest_trading_day": "2020-04-21",
+          "hit": 1
+        },
+        {
+          "date": "2021-11-26",
+          "name": "Omicron risk-off",
+          "era": "oos",
+          "nearest_trading_day": "2021-11-26",
+          "hit": 1
+        },
+        {
+          "date": "2022-03-08",
+          "name": "Russia\u2013Ukraine spike",
+          "era": "oos",
+          "nearest_trading_day": "2022-03-08",
+          "hit": 1
+        },
+        {
+          "date": "2022-03-09",
+          "name": "Post-invasion continuation",
+          "era": "oos",
+          "nearest_trading_day": "2022-03-09",
+          "hit": 1
+        },
+        {
+          "date": "2022-06-17",
+          "name": "2022 mid-year liquidation",
+          "era": "oos",
+          "nearest_trading_day": "2022-06-17",
+          "hit": 0
+        },
+        {
+          "date": "2023-04-03",
+          "name": "OPEC+ surprise cut",
+          "era": "oos",
+          "nearest_trading_day": "2023-04-03",
+          "hit": 1
+        },
+        {
+          "date": "2023-10-09",
+          "name": "Israel\u2013Hamas oil spike",
+          "era": "oos",
+          "nearest_trading_day": "2023-10-09",
+          "hit": 1
+        }
+      ],
+      "peak_mse_date": "2020-04-28",
+      "peak_mse": 231.7071075439453
+    },
+    "historical": {
+      "n_days": 2273,
+      "n_flags": 120,
+      "flag_rate": 0.05279366476022877,
+      "n_episodes": 54,
+      "median_episode_length": 1.0,
+      "max_episode_length": 12,
+      "oos_event_recall": null,
+      "oos_events_hit": 0,
+      "oos_events_total": 0,
+      "calibration_event_recall": null,
+      "calibration_events_hit": 0,
+      "calibration_events_total": 0,
+      "events": [
+        {
+          "date": "2001-09-17",
+          "name": "9/11 session reopen",
+          "era": "pre",
+          "nearest_trading_day": "2001-09-17",
+          "hit": 1
+        },
+        {
+          "date": "2003-03-20",
+          "name": "Iraq invasion",
+          "era": "pre",
+          "nearest_trading_day": "2003-03-20",
+          "hit": 1
+        },
+        {
+          "date": "2008-07-11",
+          "name": "WTI cycle high (~$147)",
+          "era": "pre",
+          "nearest_trading_day": "2008-07-11",
+          "hit": 0
+        },
+        {
+          "date": "2008-10-10",
+          "name": "GFC crash week",
+          "era": "pre",
+          "nearest_trading_day": "2008-10-10",
+          "hit": 1
+        },
+        {
+          "date": "2008-12-19",
+          "name": "GFC WTI trough",
+          "era": "pre",
+          "nearest_trading_day": "2008-12-19",
+          "hit": 0
+        }
+      ],
+      "peak_mse_date": "2005-05-03",
+      "peak_mse": 2.471848249435425
+    },
+    "calibration": {
+      "n_days": 2514,
+      "n_flags": 74,
+      "flag_rate": 0.0294351630867144,
+      "n_episodes": 34,
+      "median_episode_length": 1.0,
+      "max_episode_length": 10,
+      "oos_event_recall": null,
+      "oos_events_hit": 0,
+      "oos_events_total": 0,
+      "calibration_event_recall": 0.14285714285714285,
+      "calibration_events_hit": 1,
+      "calibration_events_total": 7,
+      "events": [
+        {
+          "date": "2011-05-05",
+          "name": "2011 risk-off dump",
+          "era": "calibration",
+          "nearest_trading_day": "2011-05-05",
+          "hit": 0
+        },
+        {
+          "date": "2014-11-28",
+          "name": "OPEC Thanksgiving no-cut",
+          "era": "calibration",
+          "nearest_trading_day": "2014-11-28",
+          "hit": 0
+        },
+        {
+          "date": "2015-08-24",
+          "name": "2015 China deval / risk-off",
+          "era": "calibration",
+          "nearest_trading_day": "2015-08-24",
+          "hit": 0
+        },
+        {
+          "date": "2016-01-20",
+          "name": "2014\u201316 glut cycle low",
+          "era": "calibration",
+          "nearest_trading_day": "2016-01-20",
+          "hit": 0
+        },
+        {
+          "date": "2016-02-11",
+          "name": "WTI sub-$30 trough",
+          "era": "calibration",
+          "nearest_trading_day": "2016-02-11",
+          "hit": 0
+        },
+        {
+          "date": "2018-11-13",
+          "name": "Q4-18 inventory dump",
+          "era": "calibration",
+          "nearest_trading_day": "2018-11-13",
+          "hit": 0
+        },
+        {
+          "date": "2018-12-24",
+          "name": "Q4-18 Christmas selloff",
+          "era": "calibration",
+          "nearest_trading_day": "2018-12-24",
+          "hit": 1
+        }
+      ],
+      "peak_mse_date": "2019-09-17",
+      "peak_mse": 3.2819066047668457
+    },
+    "oos": {
+      "n_days": 1683,
+      "n_flags": 174,
+      "flag_rate": 0.10338680926916222,
+      "n_episodes": 42,
+      "median_episode_length": 1.0,
+      "max_episode_length": 32,
+      "oos_event_recall": 0.9,
+      "oos_events_hit": 9,
+      "oos_events_total": 10,
+      "calibration_event_recall": null,
+      "calibration_events_hit": 0,
+      "calibration_events_total": 0,
+      "events": [
+        {
+          "date": "2020-03-09",
+          "name": "OPEC+ price war",
+          "era": "oos",
+          "nearest_trading_day": "2020-03-09",
+          "hit": 1
+        },
+        {
+          "date": "2020-03-18",
+          "name": "COVID demand collapse",
+          "era": "oos",
+          "nearest_trading_day": "2020-03-18",
+          "hit": 1
+        },
+        {
+          "date": "2020-04-20",
+          "name": "WTI negative settlement",
+          "era": "oos",
+          "nearest_trading_day": "2020-04-20",
+          "hit": 1
+        },
+        {
+          "date": "2020-04-21",
+          "name": "Post-negative bounce",
+          "era": "oos",
+          "nearest_trading_day": "2020-04-21",
+          "hit": 1
+        },
+        {
+          "date": "2021-11-26",
+          "name": "Omicron risk-off",
+          "era": "oos",
+          "nearest_trading_day": "2021-11-26",
+          "hit": 1
+        },
+        {
+          "date": "2022-03-08",
+          "name": "Russia\u2013Ukraine spike",
+          "era": "oos",
+          "nearest_trading_day": "2022-03-08",
+          "hit": 1
+        },
+        {
+          "date": "2022-03-09",
+          "name": "Post-invasion continuation",
+          "era": "oos",
+          "nearest_trading_day": "2022-03-09",
+          "hit": 1
+        },
+        {
+          "date": "2022-06-17",
+          "name": "2022 mid-year liquidation",
+          "era": "oos",
+          "nearest_trading_day": "2022-06-17",
+          "hit": 0
+        },
+        {
+          "date": "2023-04-03",
+          "name": "OPEC+ surprise cut",
+          "era": "oos",
+          "nearest_trading_day": "2023-04-03",
+          "hit": 1
+        },
+        {
+          "date": "2023-10-09",
+          "name": "Israel\u2013Hamas oil spike",
+          "era": "oos",
+          "nearest_trading_day": "2023-10-09",
+          "hit": 1
+        }
+      ],
+      "peak_mse_date": "2020-04-28",
+      "peak_mse": 231.7071075439453
+    },
+    "baselines": {
+      "n_lstm_flags": 368,
+      "n_zscore_flags": 169,
+      "n_lstm_and_zscore": 57,
+      "n_lstm_only_vs_zscore": 311,
+      "n_zscore_only": 112,
+      "peak_abs_z_date": "2020-04-20",
+      "peak_abs_z": 49.645932469306715,
+      "n_vol_flags": 320,
+      "n_lstm_and_vol": 126,
+      "n_lstm_only_vs_vol": 242,
+      "n_vol_only": 194,
+      "jaccard_lstm_vol": 0.22419928825622776
+    },
+    "baselines_oos": {
+      "n_lstm_flags": 174,
+      "n_zscore_flags": 87,
+      "n_lstm_and_zscore": 39,
+      "n_lstm_only_vs_zscore": 135,
+      "n_zscore_only": 48,
+      "peak_abs_z_date": "2020-04-20",
+      "peak_abs_z": 49.645932469306715,
+      "n_vol_flags": 193,
+      "n_lstm_and_vol": 95,
+      "n_lstm_only_vs_vol": 79,
+      "n_vol_only": 98,
+      "jaccard_lstm_vol": 0.3492647058823529
+    },
+    "oos_event_table": [
+      {
+        "date": "2020-03-09",
+        "name": "OPEC+ price war",
+        "era": "oos",
+        "nearest_trading_day": "2020-03-09",
+        "hit": 1
+      },
+      {
+        "date": "2020-03-18",
+        "name": "COVID demand collapse",
+        "era": "oos",
+        "nearest_trading_day": "2020-03-18",
+        "hit": 1
+      },
+      {
+        "date": "2020-04-20",
+        "name": "WTI negative settlement",
+        "era": "oos",
+        "nearest_trading_day": "2020-04-20",
+        "hit": 1
+      },
+      {
+        "date": "2020-04-21",
+        "name": "Post-negative bounce",
+        "era": "oos",
+        "nearest_trading_day": "2020-04-21",
+        "hit": 1
+      },
+      {
+        "date": "2021-11-26",
+        "name": "Omicron risk-off",
+        "era": "oos",
+        "nearest_trading_day": "2021-11-26",
+        "hit": 1
+      },
+      {
+        "date": "2022-03-08",
+        "name": "Russia\u2013Ukraine spike",
+        "era": "oos",
+        "nearest_trading_day": "2022-03-08",
+        "hit": 1
+      },
+      {
+        "date": "2022-03-09",
+        "name": "Post-invasion continuation",
+        "era": "oos",
+        "nearest_trading_day": "2022-03-09",
+        "hit": 1
+      },
+      {
+        "date": "2022-06-17",
+        "name": "2022 mid-year liquidation",
+        "era": "oos",
+        "nearest_trading_day": "2022-06-17",
+        "hit": 0
+      },
+      {
+        "date": "2023-04-03",
+        "name": "OPEC+ surprise cut",
+        "era": "oos",
+        "nearest_trading_day": "2023-04-03",
+        "hit": 1
+      },
+      {
+        "date": "2023-10-09",
+        "name": "Israel\u2013Hamas oil spike",
+        "era": "oos",
+        "nearest_trading_day": "2023-10-09",
+        "hit": 1
+      }
+    ],
+    "calibration_event_table": [
+      {
+        "date": "2011-05-05",
+        "name": "2011 risk-off dump",
+        "era": "calibration",
+        "nearest_trading_day": "2011-05-05",
+        "hit": 0
+      },
+      {
+        "date": "2014-11-28",
+        "name": "OPEC Thanksgiving no-cut",
+        "era": "calibration",
+        "nearest_trading_day": "2014-11-28",
+        "hit": 0
+      },
+      {
+        "date": "2015-08-24",
+        "name": "2015 China deval / risk-off",
+        "era": "calibration",
+        "nearest_trading_day": "2015-08-24",
+        "hit": 0
+      },
+      {
+        "date": "2016-01-20",
+        "name": "2014\u201316 glut cycle low",
+        "era": "calibration",
+        "nearest_trading_day": "2016-01-20",
+        "hit": 0
+      },
+      {
+        "date": "2016-02-11",
+        "name": "WTI sub-$30 trough",
+        "era": "calibration",
+        "nearest_trading_day": "2016-02-11",
+        "hit": 0
+      },
+      {
+        "date": "2018-11-13",
+        "name": "Q4-18 inventory dump",
+        "era": "calibration",
+        "nearest_trading_day": "2018-11-13",
+        "hit": 0
+      },
+      {
+        "date": "2018-12-24",
+        "name": "Q4-18 Christmas selloff",
+        "era": "calibration",
+        "nearest_trading_day": "2018-12-24",
+        "hit": 1
+      }
+    ],
+    "historical_event_table": [
+      {
+        "date": "2001-09-17",
+        "name": "9/11 session reopen",
+        "era": "pre",
+        "nearest_trading_day": "2001-09-17",
+        "hit": 1
+      },
+      {
+        "date": "2003-03-20",
+        "name": "Iraq invasion",
+        "era": "pre",
+        "nearest_trading_day": "2003-03-20",
+        "hit": 1
+      },
+      {
+        "date": "2008-07-11",
+        "name": "WTI cycle high (~$147)",
+        "era": "pre",
+        "nearest_trading_day": "2008-07-11",
+        "hit": 0
+      },
+      {
+        "date": "2008-10-10",
+        "name": "GFC crash week",
+        "era": "pre",
+        "nearest_trading_day": "2008-10-10",
+        "hit": 1
+      },
+      {
+        "date": "2008-12-19",
+        "name": "GFC WTI trough",
+        "era": "pre",
+        "nearest_trading_day": "2008-12-19",
+        "hit": 0
+      }
+    ],
+    "data_drift": {
+      "kind": "data_drift",
+      "psi_normalized_return": 0.052136168831467926,
+      "psi_normalized_return_band": "stable",
+      "ks_normalized_return": 0.06922188127438722,
+      "psi_local_scale": 2.8825722519375785,
+      "psi_local_scale_band": "significant",
+      "ks_local_scale": 0.40990453460620524,
+      "median_x_expected": 0.033382468602570436,
+      "median_x_actual": 0.08569005054413023,
+      "median_scale_expected": 1.1490172622680663,
+      "median_scale_actual": 1.2787399549484253,
+      "psi_warn": 0.1,
+      "psi_alert": 0.25,
+      "alert": false,
+      "warn": false
+    },
+    "concept_drift": {
+      "kind": "concept_drift",
+      "quiet_mse_expected_mean": 0.08919644323884982,
+      "quiet_mse_actual_mean": 0.9149038036829317,
+      "quiet_mse_expected_median": 0.047715406864881516,
+      "quiet_mse_actual_median": 0.07197971642017365,
+      "degradation_ratio": 0.5085214849786943,
+      "max_degradation_ratio": 0.1,
+      "allowed_median": 0.05248694755136967,
+      "alert": true,
+      "n_expected": 2393,
+      "n_actual": 143,
+      "note": "Alert uses the median of quiet-day MSE. The mean is reported but is dominated by leftover ringing from overlapping windows."
+    },
+    "honest_baseline": {
+      "lstm": [
+        {
+          "date": "2020-03-09",
+          "name": "OPEC+ price war",
+          "era": "oos",
+          "nearest_trading_day": "2020-03-09",
+          "hit": 1
+        },
+        {
+          "date": "2020-03-18",
+          "name": "COVID demand collapse",
+          "era": "oos",
+          "nearest_trading_day": "2020-03-18",
+          "hit": 1
+        },
+        {
+          "date": "2020-04-20",
+          "name": "WTI negative settlement",
+          "era": "oos",
+          "nearest_trading_day": "2020-04-20",
+          "hit": 1
+        },
+        {
+          "date": "2020-04-21",
+          "name": "Post-negative bounce",
+          "era": "oos",
+          "nearest_trading_day": "2020-04-21",
+          "hit": 1
+        },
+        {
+          "date": "2021-11-26",
+          "name": "Omicron risk-off",
+          "era": "oos",
+          "nearest_trading_day": "2021-11-26",
+          "hit": 1
+        },
+        {
+          "date": "2022-03-08",
+          "name": "Russia\u2013Ukraine spike",
+          "era": "oos",
+          "nearest_trading_day": "2022-03-08",
+          "hit": 1
+        },
+        {
+          "date": "2022-03-09",
+          "name": "Post-invasion continuation",
+          "era": "oos",
+          "nearest_trading_day": "2022-03-09",
+          "hit": 1
+        },
+        {
+          "date": "2022-06-17",
+          "name": "2022 mid-year liquidation",
+          "era": "oos",
+          "nearest_trading_day": "2022-06-17",
+          "hit": 0
+        },
+        {
+          "date": "2023-04-03",
+          "name": "OPEC+ surprise cut",
+          "era": "oos",
+          "nearest_trading_day": "2023-04-03",
+          "hit": 1
+        },
+        {
+          "date": "2023-10-09",
+          "name": "Israel\u2013Hamas oil spike",
+          "era": "oos",
+          "nearest_trading_day": "2023-10-09",
+          "hit": 1
+        }
+      ],
+      "rolling_vol": [
+        {
+          "date": "2020-03-09",
+          "name": "OPEC+ price war",
+          "era": "oos",
+          "nearest_trading_day": "2020-03-09",
+          "hit": 1
+        },
+        {
+          "date": "2020-03-18",
+          "name": "COVID demand collapse",
+          "era": "oos",
+          "nearest_trading_day": "2020-03-18",
+          "hit": 1
+        },
+        {
+          "date": "2020-04-20",
+          "name": "WTI negative settlement",
+          "era": "oos",
+          "nearest_trading_day": "2020-04-20",
+          "hit": 1
+        },
+        {
+          "date": "2020-04-21",
+          "name": "Post-negative bounce",
+          "era": "oos",
+          "nearest_trading_day": "2020-04-21",
+          "hit": 1
+        },
+        {
+          "date": "2021-11-26",
+          "name": "Omicron risk-off",
+          "era": "oos",
+          "nearest_trading_day": "2021-11-26",
+          "hit": 1
+        },
+        {
+          "date": "2022-03-08",
+          "name": "Russia\u2013Ukraine spike",
+          "era": "oos",
+          "nearest_trading_day": "2022-03-08",
+          "hit": 1
+        },
+        {
+          "date": "2022-03-09",
+          "name": "Post-invasion continuation",
+          "era": "oos",
+          "nearest_trading_day": "2022-03-09",
+          "hit": 1
+        },
+        {
+          "date": "2022-06-17",
+          "name": "2022 mid-year liquidation",
+          "era": "oos",
+          "nearest_trading_day": "2022-06-17",
+          "hit": 1
+        },
+        {
+          "date": "2023-04-03",
+          "name": "OPEC+ surprise cut",
+          "era": "oos",
+          "nearest_trading_day": "2023-04-03",
+          "hit": 0
+        },
+        {
+          "date": "2023-10-09",
+          "name": "Israel\u2013Hamas oil spike",
+          "era": "oos",
+          "nearest_trading_day": "2023-10-09",
+          "hit": 0
+        }
+      ],
+      "lstm_recall": 0.9,
+      "vol_recall": 0.8,
+      "lstm_only_events": [
+        "OPEC+ surprise cut",
+        "Israel\u2013Hamas oil spike"
+      ],
+      "vol_only_events": [
+        "2022 mid-year liquidation"
+      ],
+      "both_events": [
+        "OPEC+ price war",
+        "COVID demand collapse",
+        "WTI negative settlement",
+        "Post-negative bounce",
+        "Omicron risk-off",
+        "Russia\u2013Ukraine spike",
+        "Post-invasion continuation"
+      ],
+      "neither_events": []
+    }
+  },
   "plots": {
     "price_plot": "plot.png",
     "anomalies_plot": "plot-anomalies.png",
     "reconstruction_plot": "plot-reconstruction-error.png",
+    "magnitude_plot": "plot-magnitude.png",
+    "zscore_plot": "plot-zscore.png",
+    "vol_plot": "plot-vol-baseline.png",
+    "drift_plot": "plot-drift.png",
     "loss_plot": "plot-training-loss.png",
     "anomalies_html": "plot-anomalies.html",
     "reconstruction_html": "plot-reconstruction-error.html"

@@ -1,38 +1,24 @@
-"""LSTM autoencoder for unsupervised anomaly detection on WTI prices.
+"""LSTM autoencoder for unsupervised WTI shape-break detection.
 
-Architecture (faithful to the research notebook, expressed in modern Keras)
---------------------------------------------------------------------------
-The network is a symmetric sequence-to-sequence autoencoder. It is trained
-to reconstruct a lookback window of scaled Close prices. Points whose
-reconstruction error exceeds a statistical threshold are flagged as anomalies.
+Reconstructs lookback windows of locally vol-normalized ΔClose. The
+decision threshold is the configured percentile of *quiet calibration*
+MSE (project default P99), frozen after ``train``.
 
 ::
 
     Input                  (batch, T, 1)
       │
-      ├─ LSTM(64, relu, return_sequences=True)
-      ├─ Dropout(0.25)
-      ├─ LSTM(32, relu, return_sequences=False)   ← latent bottleneck
-      ├─ Dropout(0.25)
+      ├─ LSTM(64, tanh, return_sequences=True)
+      ├─ Dropout(0.1)
+      ├─ LSTM(32, tanh, return_sequences=False)   ← latent bottleneck
+      ├─ Dropout(0.1)
       ├─ RepeatVector(T)
-      ├─ LSTM(32, relu, return_sequences=True)
-      ├─ Dropout(0.25)
-      ├─ LSTM(64, relu, return_sequences=True)
-      ├─ Dropout(0.25)
+      ├─ LSTM(32, tanh, return_sequences=True)
+      ├─ Dropout(0.1)
+      ├─ LSTM(64, tanh, return_sequences=True)
+      ├─ Dropout(0.1)
       └─ TimeDistributed(Dense(1))
     Output                 (batch, T, 1)
-
-Training objective
-------------------
-Mean squared error between the input window and its reconstruction (``mse``),
-optimized with Adam. The notebook trained for up to 100 epochs with
-``EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)``.
-
-Anomaly score and threshold
----------------------------
-Per-window reconstruction MSE is computed after inference. The decision
-threshold is the 90th percentile of those scores (notebook default). MAE
-is also reported as a training-quality metric.
 """
 
 from __future__ import annotations
@@ -81,14 +67,16 @@ class LSTMAutoencoder:
         Hidden sizes of the two encoder LSTM layers. Default ``(64, 32)``.
     decoder_units:
         Hidden sizes of the two decoder LSTM layers. Default ``(32, 64)``.
-    dropout:
-        Dropout rate applied after every LSTM. Default ``0.25``.
+        dropout:
+        Dropout after every LSTM. Default ``0.1``. Four layers at 0.25
+        leaves ~32% expected path mass and underfits a 10-step univariate
+        autoencoder, especially with tanh.
     activation:
-        Recurrent activation used in the notebook: ``relu``.
+        Recurrent activation. Default ``tanh`` (canonical LSTM).
     loss:
         Reconstruction loss. Default ``mse``.
     clipnorm:
-        Optional global-norm clip on Adam to stabilize ReLU LSTMs.
+        Optional global-norm clip on Adam. Harmless with tanh; required for ReLU.
     """
 
     def __init__(
@@ -97,12 +85,12 @@ class LSTMAutoencoder:
         n_features: int = 1,
         encoder_units: Sequence[int] = (64, 32),
         decoder_units: Sequence[int] = (32, 64),
-        dropout: float = 0.25,
-        activation: str = "relu",
+        dropout: float = 0.1,
+        activation: str = "tanh",
         loss: str = "mse",
         optimizer: str = "adam",
         clipnorm: float = 1.0,
-        threshold_percentile: float = 90.0,
+        threshold_percentile: float = 99.0,
     ) -> None:
         if lookback < 2:
             raise ValueError("lookback must be >= 2.")
@@ -190,12 +178,18 @@ class LSTMAutoencoder:
         batch_size: int,
         patience: int,
         shuffle: bool = False,
+        min_delta: float = 0.0,
+        verbose: int = 1,
     ) -> History:
         """Train the autoencoder to reconstruct its own inputs.
 
         ``x_train`` / ``x_val`` must already be 3D:
         ``(n_samples, lookback, n_features)``. Time series are not shuffled
         by default so contiguous market regimes stay intact.
+
+        When ``x_val`` is the same tensor as ``x_train``, ``val_loss`` is the
+        dropout-off reconstruction of the training windows. That is the
+        early-stop signal when we refuse to hold out calendar years.
         """
         model = self._require_model()
         x_train = self._validate_tensor(x_train, "x_train")
@@ -204,6 +198,7 @@ class LSTMAutoencoder:
             EarlyStopping(
                 monitor="val_loss",
                 patience=patience,
+                min_delta=min_delta,
                 restore_best_weights=True,
             )
         ]
@@ -215,7 +210,7 @@ class LSTMAutoencoder:
             batch_size=batch_size,
             shuffle=shuffle,
             callbacks=callbacks,
-            verbose=1,
+            verbose=verbose,
         )
         return history
 
@@ -295,7 +290,7 @@ class LSTMAutoencoder:
         cls,
         path: str | Path,
         *,
-        threshold_percentile: float = 90.0,
+        threshold_percentile: float = 99.0,
         threshold: float | None = None,
     ) -> LSTMAutoencoder:
         """Load a previously saved ``.keras`` autoencoder."""
@@ -358,6 +353,14 @@ class LSTMAutoencoder:
         lookback = int(shape[1])
         n_features = int(shape[2])
         return lookback, n_features
+
+
+def magnitude_score(mse: np.ndarray, threshold: float) -> np.ndarray:
+    """Log magnitude: 0 at the threshold, +1 at 10× reconstruction error."""
+    if threshold <= 0:
+        raise ValueError("threshold must be > 0.")
+    errors = np.asarray(mse, dtype=np.float64)
+    return np.log10(np.maximum(errors, 1e-12) / float(threshold))
 
 
 def keras_model_to_dict(model: Model) -> dict[str, Any]:

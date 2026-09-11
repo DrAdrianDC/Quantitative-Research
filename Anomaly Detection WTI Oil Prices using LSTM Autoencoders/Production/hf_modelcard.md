@@ -15,7 +15,7 @@ tags:
 
 Unsupervised reconstruction-error model for daily WTI futures (`CL=F`). The network reconstructs **10-day windows of causally vol-normalized ΔClose** (USD/bbl). A window is flagged when its reconstruction MSE exceeds the 99th percentile of **quiet calibration** MSE (2010–2019). That threshold is frozen at **0.382**. 2008 is a historical holdout (not in the loss). 2020–present is out of sample.
 
-This is a shape-break score, not a crisis classifier and not a forecast. A rolling 10-day vol rule and a one-day robust z-score are published next to it at the same P99 budget. Training and scoring live in [DrAdrianDC/WTI_Anomaly_Detection](https://github.com/DrAdrianDC/WTI_Anomaly_Detection).
+This is a shape-break score, not a crisis classifier and not a forecast. A rolling 10-day vol rule and a one-day robust z-score are published next to it at the same P99 budget. Training and scoring are in this `Production/` folder (`src/pipeline.py`).
 
 ## Files
 

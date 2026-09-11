@@ -1,5 +1,3 @@
-> **Live repository:** [DrAdrianDC/WTI_Anomaly_Detection](https://github.com/DrAdrianDC/WTI_Anomaly_Detection). This `Production/` folder is a snapshot inside Quantitative-Research.
-
 # WTI Crude Oil Price Anomaly Detection
 
 Unsupervised LSTM autoencoder on daily WTI futures (`CL=F`). It reconstructs **10-day windows of locally vol-normalized ΔClose** (USD/bbl, not percent — the contract went negative). A day is flagged when reconstruction MSE exceeds the 99th percentile of *quiet* 2010–2019 error. That threshold is frozen. 2020–present is out of sample. 2008 is scored but was never in the loss.
